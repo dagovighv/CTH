@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Simulación Drive-by Benigna</title>
+</head>
+
+<body>
+<h2>Simulación Drive-by Benigna (T1189)</h2>
+<p>Descarga automática desde un sitio oficial (RFC Editor).</p>
+
+<script>
+    // URL oficial de un archivo TXT completamente benigno
+    const url = "https://www.rfc-editor.org/rfc/rfc20.txt";
+
+    // Crear enlace invisible para forzar descarga
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = "official_rfc20.txt"; 
+    document.body.appendChild(a);
+    a.click();
+</script>
+
+</body>
+</html>
