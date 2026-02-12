@@ -7,24 +7,41 @@
 
 <body>
 <h2>Simulación Drive-by Benigna (T1189)</h2>
-<p>Descarga automática desde un sitio oficial (RFC Editor).</p>
+<p>Descarga automática basada en contenido oficial.</p>
 
 <script>
-// URL oficial del archivo benigno
+// URL real del archivo oficial
 const url = "https://www.rfc-editor.org/rfc/rfc20.txt";
 
-// Espera 500ms para evitar política anti-popup
-setTimeout(() => {
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = "official_rfc20.txt";  // <- fuerza la descarga
-    a.style.display = "none";
-    a.target = "_self"; // evita abrir nueva pestaña
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-}, 500);
+async function simulateDownload() {
+    try {
+        // Descarga el texto REAL desde RFC Editor
+        const response = await fetch(url);
+        const text = await response.text();
+
+        // Crea un blob para forzar descarga en local
+        const blob = new Blob([text], { type: "text/plain" });
+        const blobUrl = URL.createObjectURL(blob);
+
+        const a = document.createElement("a");
+        a.href = blobUrl;
+        a.download = "official_rfc20.txt";   // Fuerza descarga SIEMPRE
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+
+        // Libera memoria
+        URL.revokeObjectURL(blobUrl);
+    }
+    catch(e) {
+        console.error("Error en simulación:", e);
+    }
+}
+
+// Espera un momento para pasar políticas anti-popup
+setTimeout(simulateDownload, 600);
 </script>
 
 </body>
 </html>
+
