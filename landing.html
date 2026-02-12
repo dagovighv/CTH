@@ -10,15 +10,20 @@
 <p>Descarga automática desde un sitio oficial (RFC Editor).</p>
 
 <script>
-    // URL oficial de un archivo TXT completamente benigno
-    const url = "https://www.rfc-editor.org/rfc/rfc20.txt";
+// URL oficial del archivo benigno
+const url = "https://www.rfc-editor.org/rfc/rfc20.txt";
 
-    // Crear enlace invisible para forzar descarga
+// Espera 500ms para evitar política anti-popup
+setTimeout(() => {
     const a = document.createElement('a');
     a.href = url;
-    a.download = "official_rfc20.txt"; 
+    a.download = "official_rfc20.txt";  // <- fuerza la descarga
+    a.style.display = "none";
+    a.target = "_self"; // evita abrir nueva pestaña
     document.body.appendChild(a);
     a.click();
+    document.body.removeChild(a);
+}, 500);
 </script>
 
 </body>
